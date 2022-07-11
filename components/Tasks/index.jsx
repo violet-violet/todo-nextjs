@@ -34,6 +34,22 @@ const Tasks = ({ defaultList }) => {
         setTasks((_s) => [..._s, newTask])
     }, [])
 
+    const updateTaskText = useCallback((id, text) => {
+        setTasks((_s) => {
+            const target = _s.findIndex((item) => item.id === id)
+
+            if (target >= 0) {
+                const state = [..._s]
+
+                state[target].text = text
+
+                return state
+            }
+
+            return _s
+        })
+    }, [])
+
     const toggleTask = useCallback((id) => {
         setTasks((_s) => {
             const target = _s.findIndex((item) => item.id === id)
@@ -121,6 +137,7 @@ const Tasks = ({ defaultList }) => {
                         list={visibleTasks}
                         onDelete={deleteTask}
                         onTaskToggle={toggleTask}
+                        onTextUpdate={updateTaskText}
                     />
                     <Filters filter={filter} onFilter={onFilter} />
                 </Box>
