@@ -1,12 +1,17 @@
-import MainLayout from "../components/MainLayout"
+import { useMemo } from "react"
 
-const title = "TODO"
-const subtitle = "Basic"
+/* COMPONENTS */
+import MainLayout from "../components/MainLayout"
+import Tasks from "../components/Tasks"
+
+/* CONST */
+const title = "TODOS"
+const subtitle = "Basic list"
 
 const Home = () => {
     return (
         <MainLayout title={title} subtitle={subtitle}>
-            home
+            <Tasks />
         </MainLayout>
     )
 }
