@@ -10,6 +10,11 @@ import { Box } from "grommet"
 /* HELPERS */
 import { IsNotEmptyArray } from "../../helpers/ValueTests"
 
+/* CONST */
+export const ALL_TASKS = "all"
+export const ACTIVE_TASKS = "active"
+export const DONE_TASKS = "done"
+
 const Tasks = ({ defaultList }) => {
     const defaultState = useMemo(
         () => (IsNotEmptyArray(defaultList) ? defaultList : []),
@@ -17,6 +22,7 @@ const Tasks = ({ defaultList }) => {
     )
 
     const [tasks, setTasks] = useState(defaultState)
+    const [filter, setFilter] = useState(ALL_TASKS)
 
     const addTask = useCallback((text) => {
         const newTask = {
@@ -68,6 +74,10 @@ const Tasks = ({ defaultList }) => {
         setTasks((_s) => _s.filter((item) => item.id !== id))
     }, [])
 
+    const onFilter = useCallback((newFilter) => {
+        setFilter((_f) => (newFilter !== _f ? newFilter : _f))
+    }, [])
+
     const tasksLeft = useMemo(() => {
         if (!IsNotEmptyArray(tasks)) {
             return 0
@@ -81,6 +91,18 @@ const Tasks = ({ defaultList }) => {
             return acc
         }, 0)
     }, [tasks])
+
+    const visibleTasks = useMemo(() => {
+        if (filter === ACTIVE_TASKS) {
+            return tasks.filter((_t) => !_t.isCompleted)
+        }
+
+        if (filter === DONE_TASKS) {
+            return tasks.filter((_t) => _t.isCompleted)
+        }
+
+        return tasks
+    }, [tasks, filter])
 
     // console.log("Tasks", tasks)
 
@@ -96,11 +118,11 @@ const Tasks = ({ defaultList }) => {
             {IsNotEmptyArray(tasks) && (
                 <Box gap="medium">
                     <TaskList
-                        list={tasks}
+                        list={visibleTasks}
                         onDelete={deleteTask}
                         onTaskToggle={toggleTask}
                     />
-                    <Filters tasksLeft={tasksLeft} />
+                    <Filters filter={filter} onFilter={onFilter} />
                 </Box>
             )}
         </Box>
