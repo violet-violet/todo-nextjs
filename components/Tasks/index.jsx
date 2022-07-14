@@ -135,6 +135,10 @@ const Tasks = ({ defaultList, storageAddition = "" }) => {
         return tasks
     }, [tasks, filter])
 
+    useEffect(() => {
+        setStorage(tasks)
+    }, [tasks])
+
     return (
         <Box pad="xsmall" gap="medium" margin={{ top: "medium" }}>
             <AddNewTask
