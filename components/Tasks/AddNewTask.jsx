@@ -7,7 +7,7 @@ import { Box, Button, TextInput } from "grommet"
 import { LinkDown } from "grommet-icons"
 
 /* HELPERS */
-import { IsNotEmptyArray, IsNumber, IsSet } from "../../helpers/ValueTests"
+import { IsNumber, IsSet } from "../../helpers/ValueTests"
 
 const AddNewTask = ({ isToggleAllDisabled, tasksLeft, onAdd, onToggleAll }) => {
     const [value, setValue] = useState("")

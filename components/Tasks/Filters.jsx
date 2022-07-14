@@ -1,7 +1,7 @@
 import { useCallback } from "react"
 
 /* COMPONENTS */
-import { Box, Button, Text } from "grommet"
+import { Box, Button } from "grommet"
 
 /* CONST */
 import { ACTIVE_TASKS, ALL_TASKS, DONE_TASKS } from "."

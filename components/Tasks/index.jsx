@@ -1,25 +1,40 @@
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 
 /* COMPONENTS */
 import AddNewTask from "./AddNewTask"
 import TaskList from "./TaskList"
 import Filters from "./Filters"
-import { Box } from "grommet"
+import { Box, Spinner } from "grommet"
 
 /* HELPERS */
-import { IsNotEmptyArray } from "../../helpers/ValueTests"
+import { IsNotEmptyArray, IsSet } from "../../helpers/ValueTests"
+import { useLocalStorage } from "../../helpers/React/Utils"
 
 /* CONST */
 export const ALL_TASKS = "all"
 export const ACTIVE_TASKS = "active"
 export const DONE_TASKS = "done"
+const storageName = "NextTodo"
 
-const Tasks = ({ defaultList }) => {
-    const defaultState = useMemo(
-        () => (IsNotEmptyArray(defaultList) ? defaultList : []),
-        [defaultList]
+const Tasks = ({ defaultList, storageAddition = "" }) => {
+    const [storage, setStorage] = useLocalStorage(
+        `${storageName}${storageAddition}`,
+        "",
+        true
     )
+
+    const defaultState = useMemo(() => {
+        if (IsSet(storage)) {
+            return storage
+        }
+
+        if (IsNotEmptyArray(defaultList)) {
+            return defaultList
+        }
+
+        return []
+    }, [storage, defaultList])
 
     const [tasks, setTasks] = useState(defaultState)
     const [filter, setFilter] = useState(ALL_TASKS)
@@ -99,7 +114,7 @@ const Tasks = ({ defaultList }) => {
             return 0
         }
 
-        return tasks.reduce((acc, current, index, arr) => {
+        return tasks.reduce((acc, current) => {
             if (!current.isCompleted) {
                 acc += 1
             }
@@ -119,8 +134,6 @@ const Tasks = ({ defaultList }) => {
 
         return tasks
     }, [tasks, filter])
-
-    // console.log("Tasks", tasks)
 
     return (
         <Box pad="xsmall" gap="medium" margin={{ top: "medium" }}>
@@ -146,4 +159,18 @@ const Tasks = ({ defaultList }) => {
     )
 }
 
-export default Tasks
+const TasksWrap = (props) => {
+    const [mount, setMount] = useState(false)
+
+    useEffect(() => {
+        setMount(true)
+    }, [])
+
+    if (!mount) {
+        return <Spinner />
+    }
+
+    return <Tasks {...props} />
+}
+
+export default TasksWrap

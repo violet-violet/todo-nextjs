@@ -1,5 +1,3 @@
-import { useMemo } from "react"
-
 /* COMPONENTS */
 import MainLayout from "../components/MainLayout"
 import Tasks from "../components/Tasks"

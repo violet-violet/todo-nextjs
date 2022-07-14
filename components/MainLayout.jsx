@@ -1,12 +1,4 @@
-import {
-    Anchor,
-    Footer,
-    Header,
-    Main,
-    Page,
-    PageContent,
-    PageHeader,
-} from "grommet"
+import { Anchor, Footer, Main, Page, PageContent, PageHeader } from "grommet"
 
 const MainLayout = ({ title, subtitle, link = "/", children }) => {
     return (

@@ -1,11 +1,10 @@
 import { useCallback, useState } from "react"
 
 /* COMPONENTS */
-import { Box, Button, CheckBox, Text, TextInput } from "grommet"
+import { Box, Button, CheckBox, TextInput } from "grommet"
 
 /* HELPERS */
-import { IsNotEmptyArray, IsSet } from "../../helpers/ValueTests"
-import { useBoolean } from "../../helpers/React/Utils"
+import { IsSet } from "../../helpers/ValueTests"
 
 /* UI */
 import { FormTrash } from "grommet-icons"
@@ -38,13 +37,13 @@ const Task = (props) => {
     )
 
     const onLabelChange = useCallback((e) => {
-        setLabel((_l) => ({ ..._l, text: event.target.value }))
+        setLabel((_l) => ({ ..._l, text: e.target.value }))
     }, [])
 
     const finishEdit = useCallback(() => {
         onTextUpdate(id, label.text)
         setLabel((_l) => ({ ..._l, isEditable: false, text: "" }))
-    }, [id, label])
+    }, [id, label, onTextUpdate])
 
     const onKeyDown = useCallback(
         (e) => {
@@ -52,7 +51,7 @@ const Task = (props) => {
                 finishEdit()
             }
         },
-        [finishEdit]
+        [label.text, finishEdit]
     )
 
     return (
