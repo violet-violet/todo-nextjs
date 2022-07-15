@@ -11,7 +11,7 @@ const ErrorPage = () => (
         <Heading>{heading}</Heading>
 
         <Link href="/">
-            <Anchor label="Home" />
+            <Anchor href="/" label="Home" />
         </Link>
     </MainLayout>
 )
