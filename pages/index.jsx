@@ -3,13 +3,12 @@ import MainLayout from "../components/MainLayout"
 import Tasks from "../components/Tasks"
 
 /* CONST */
-const title = "TODOS"
-const subtitle = "Basic list"
+const subtitle = "Empty list"
 
 const Home = () => {
     return (
-        <MainLayout title={title} subtitle={subtitle}>
-            <Tasks />
+        <MainLayout subtitle={subtitle} isNoLink>
+            <Tasks storageAddition="index" />
         </MainLayout>
     )
 }

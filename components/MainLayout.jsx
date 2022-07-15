@@ -1,21 +1,39 @@
-import { Anchor, Footer, Main, Page, PageContent, PageHeader } from "grommet"
+import {
+    Anchor,
+    Footer,
+    Main,
+    Page,
+    PageContent,
+    PageHeader,
+    Paragraph,
+} from "grommet"
+const title = "TODOS"
 
-const MainLayout = ({ title, subtitle, link = "/", children }) => {
-    return (
-        <Page kind="narrow">
-            <PageContent height={{ min: "100vh" }}>
+const MainLayout = ({ subtitle, isNoLink, isNoHeader, children }) => (
+    <Page kind="narrow">
+        <PageContent height={{ min: "100vh" }}>
+            {!isNoHeader && (
                 <PageHeader
                     title={title}
                     subtitle={subtitle}
-                    parent={<Anchor href={link} label="Home" />}
+                    parent={
+                        isNoLink ? undefined : <Anchor href="/" label="Home" />
+                    }
                 />
+            )}
 
-                <Main>{children}</Main>
+            <Main>{children}</Main>
 
-                <Footer>Made by Violet</Footer>
-            </PageContent>
-        </Page>
-    )
-}
+            <Footer>
+                <Paragraph>
+                    <Anchor
+                        href="https://github.com/violet-violet"
+                        label="Made by Violet"
+                    />
+                </Paragraph>
+            </Footer>
+        </PageContent>
+    </Page>
+)
 
 export default MainLayout
