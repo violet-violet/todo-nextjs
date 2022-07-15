@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react"
 
 /* COMPONENTS */
-import { Box, Button, CheckBox, TextInput } from "grommet"
+import { Box, Button, CheckBox, Paragraph, TextInput } from "grommet"
 
 /* HELPERS */
 import { IsSet } from "../../helpers/ValueTests"
@@ -84,12 +84,22 @@ const Task = (props) => {
     )
 }
 
-const TaskList = ({ list, ...rest }) => (
-    <Box pad="xsmall" gap="small">
-        {list.map((task) => (
-            <Task key={task.id} {...task} {...rest} />
-        ))}
-    </Box>
-)
+const TaskList = ({ list, ...rest }) => {
+    if (list.length === 0) {
+        return (
+            <Box>
+                <Paragraph>No tasks</Paragraph>
+            </Box>
+        )
+    }
+
+    return (
+        <Box pad="xsmall" gap="small">
+            {list.map((task) => (
+                <Task key={task.id} {...task} {...rest} />
+            ))}
+        </Box>
+    )
+}
 
 export default TaskList

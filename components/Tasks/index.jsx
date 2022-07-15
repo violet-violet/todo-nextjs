@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid"
 import AddNewTask from "./AddNewTask"
 import TaskList from "./TaskList"
 import Filters from "./Filters"
-import { Box, Spinner } from "grommet"
+import { Box, Paragraph, Spinner } from "grommet"
 
 /* HELPERS */
 import { IsNotEmptyArray, IsSet } from "../../helpers/ValueTests"
@@ -157,6 +157,12 @@ const Tasks = ({ defaultList, storageAddition = "" }) => {
                         onTextUpdate={updateTaskText}
                     />
                     <Filters filter={filter} onFilter={onFilter} />
+                </Box>
+            )}
+
+            {tasks.length === 0 && (
+                <Box>
+                    <Paragraph>No tasks</Paragraph>
                 </Box>
             )}
         </Box>
